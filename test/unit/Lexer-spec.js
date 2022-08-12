@@ -41,6 +41,78 @@ describe('Lexer', () => {
     });
   });
 
+  describe('katex', () => {
+    it('katex', () => {
+      expectTokens({
+        md: '$y=x^a,\\quad a\\in R$',
+        tokens: [
+          { type: 'katex', raw: '$y=x^a,\\quad a\\in R$', text: 'y=x^a,\\quad a\\in R' }
+        ]
+      });
+    });
+
+    it('katex double dollar', () => {
+      expectTokens({
+        md: '$$y=x^a,\\quad a\\in R$$',
+        tokens: [
+          { type: 'katex', raw: '$$y=x^a,\\quad a\\in R$$', text: 'y=x^a,\\quad a\\in R' }
+        ]
+      });
+    });
+
+    it('katex title', () => {
+      expectTokens({
+        md: '## $y=x^a,\\quad a\\in R$',
+        tokens: [
+          {
+            type: 'heading',
+            raw: '## $y=x^a,\\quad a\\in R$',
+            depth: 2,
+            text: '$y=x^a,\\quad a\\in R$',
+            tokens: [{ type: 'katex', raw: '$y=x^a,\\quad a\\in R$', text: 'y=x^a,\\quad a\\in R' }]
+          }
+        ]
+      });
+    });
+
+    it('katex title and text', () => {
+      expectTokens({
+        md: '## $y=x^a,\\quad a\\in R$ hello world',
+        tokens: [
+          {
+            type: 'heading',
+            raw: '## $y=x^a,\\quad a\\in R$ hello world',
+            depth: 2,
+            text: '$y=x^a,\\quad a\\in R$ hello world',
+            tokens: [
+              { type: 'katex', raw: '$y=x^a,\\quad a\\in R$', text: 'y=x^a,\\quad a\\in R' },
+              { type: 'text', raw: ' hello world', text: ' hello world' }
+            ]
+          }
+        ]
+      });
+    });
+
+    it('katex title and text', () => {
+      expectTokens({
+        md: '## hello $y=x^a,\\quad a\\in R$ world',
+        tokens: [
+          {
+            type: 'heading',
+            raw: '## hello $y=x^a,\\quad a\\in R$ world',
+            depth: 2,
+            text: 'hello $y=x^a,\\quad a\\in R$ world',
+            tokens: [
+              { type: 'text', raw: 'hello ', text: 'hello ' },
+              { type: 'katex', raw: '$y=x^a,\\quad a\\in R$', text: 'y=x^a,\\quad a\\in R' },
+              { type: 'text', raw: ' world', text: ' world' }
+            ]
+          }
+        ]
+      });
+    });
+  });
+
   describe('code', () => {
     it('indented code', () => {
       expectTokens({

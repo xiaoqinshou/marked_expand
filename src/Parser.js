@@ -89,6 +89,10 @@ export class Parser {
             this.slugger);
           continue;
         }
+        case 'katex': {
+          out += this.renderer.katex(token.text);
+          break;
+        }
         case 'code': {
           out += this.renderer.code(token.text,
             token.lang,
@@ -268,6 +272,10 @@ export class Parser {
         }
         case 'text': {
           out += renderer.text(token.text);
+          break;
+        }
+        case 'katex': {
+          out += renderer.katex(token.text);
           break;
         }
         default: {

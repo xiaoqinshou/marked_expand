@@ -200,4 +200,8 @@ export class Renderer {
   text(text) {
     return text;
   }
+
+  katex(text) {
+    return text;
+  }
 }

@@ -183,6 +183,13 @@ export class Lexer {
         continue;
       }
 
+      // katex
+      if (token = this.tokenizer.katex(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      }
+
       // fences
       if (token = this.tokenizer.fences(src)) {
         src = src.substring(token.raw.length);
@@ -449,6 +456,13 @@ export class Lexer {
 
       // url (gfm)
       if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      }
+
+      // katex
+      if (token = this.tokenizer.katex(src)) {
         src = src.substring(token.raw.length);
         tokens.push(token);
         continue;

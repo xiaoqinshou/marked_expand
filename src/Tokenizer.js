@@ -94,6 +94,18 @@ export class Tokenizer {
     }
   }
 
+  katex(src) {
+    const cap = this.rules.block.katex.exec(src);
+    if (cap) {
+      const text = cap[0].replace(/\$/g, '');
+      return {
+        type: 'katex',
+        raw: cap[0],
+        text
+      };
+    }
+  }
+
   fences(src) {
     const cap = this.rules.block.fences.exec(src);
     if (cap) {
