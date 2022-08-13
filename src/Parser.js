@@ -91,6 +91,9 @@ export class Parser {
         }
         case 'katex': {
           out += this.renderer.katex(token.text);
+          if (i + 1 < l && token.raw.endsWith("\n")){
+            out += this.renderer.br(); 
+          }
           break;
         }
         case 'code': {
@@ -192,6 +195,9 @@ export class Parser {
             body += '\n' + (token.tokens ? this.parseInline(token.tokens) : token.text);
           }
           out += top ? this.renderer.paragraph(body) : body;
+          if (i + 1 < l && tokens[i + 1].type === 'katex' && token.raw.endsWith("\n")){
+            out += this.renderer.br(); 
+          }
           continue;
         }
 
@@ -275,7 +281,8 @@ export class Parser {
           break;
         }
         case 'katex': {
-          out += renderer.katex(token.text);
+          // not found function in textRender, so we need to check it exist before calling it
+          out += renderer.katex? renderer.katex(token.text) : this.renderer.katex(token.text);
           break;
         }
         default: {

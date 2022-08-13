@@ -74,6 +74,7 @@
   "scripts": {
     "test": "jasmine --config=jasmine.json",
     "test:all": "npm test && npm run test:lint",
+    "test:test": "npm test -- test/unit/**/*-spec-katex.js",
     "test:unit": "npm test -- test/unit/**/*-spec.js",
     "test:specs": "npm test -- test/specs/**/*-spec.js",
     "test:lint": "eslint .",

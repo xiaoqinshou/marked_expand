@@ -32,7 +32,7 @@ export const block = {
   // interruption rules of commonmark and the original markdown spec:
   _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,
   text: /^[^\n]+/,
-  katex: /^(\$[^$]+\$)|(\$\$[^$]+\$\$)/
+  katex: /^(\$[^$]+\$)|^(\$\$[^$]+\$\$)/
 };
 
 block._label = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
